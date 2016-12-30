@@ -35,19 +35,18 @@ class NestedArrayHelper
 			if (is_array($ref) && array_key_exists($node, $ref)) {
 				$ref   =& $ref[$node];
 				$found = true;
+				continue;
 			}
-			else {
-				$found = false;
-				break;
-			}
+
+			$found = false;
+			break;
 		}
 
 		if ($found) {
 			return $ref;
 		}
-		else {
-			return $alt;
-		}
+
+		return $alt;
 	}
 
 	/**
@@ -62,20 +61,18 @@ class NestedArrayHelper
 		$key = self::convertToArray($key);
 		while (($node = array_shift($key)) !== null) {
 			if (is_array($ary) && array_key_exists($node, $ary)) {
-				if (empty($key)) {
-					$ary[$node] = $value;
-				}
-				else {
+				if (!empty($key)) {
 					$ary =& $ary[$node];
+					continue;
 				}
 			}
-			elseif (empty($key)) {
-				$ary[$node] = $value;
-			}
-			else {
+			elseif (!empty($key)) {
 				$ary[$node] = [];
 				$ary        =& $ary[$node];
+				continue;
 			}
+
+			$ary[$node] = $value;
 		}
 	}
 
@@ -94,10 +91,10 @@ class NestedArrayHelper
 		while (($node = array_shift($key)) !== null) {
 			if (is_array($ary) && array_key_exists($node, $ary)) {
 				$ary =& $ary[$node];
+				continue;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 
 		return true;
@@ -116,20 +113,15 @@ class NestedArrayHelper
 		$arys  = func_get_args();
 		$prime = array_shift($arys);
 
-		while($ary = array_shift($arys)) {
+		while ($ary = array_shift($arys)) {
 			$copy = array_diff_key($ary, $prime);
 			foreach ($ary as $key => $value) {
-				if (array_key_exists($key, $copy)) {
-					$prime[$key] = $value;
-				}
-				elseif (is_array($prime[$key]) || is_array($value)) {
+				if (!array_key_exists($key, $copy) && (is_array($prime[$key]) || is_array($value))) {
 					$prime[$key] = self::deepMerge((array)$prime[$key], (array)$value);
+					continue;
 				}
-				else {
-					$prime[$key] = $value;
-				}
+				$prime[$key] = $value;
 			}
-
 		}
 
 		return $prime;
@@ -165,10 +157,10 @@ class NestedArrayHelper
 				foreach (self::compress($v1) as $k2 => $v2) {
 					$newAry["$k1.$k2"] = $v2;
 				}
+				continue;
 			}
-			else {
-				self::set($newAry, $k1, $v1);
-			}
+
+			self::set($newAry, $k1, $v1);
 		}
 
 		return $newAry;

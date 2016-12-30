@@ -29,7 +29,7 @@ class StringHelper
 
 		foreach (self::convertNeedle($needles) as &$needle) {
 			self::assertString($needle);
-			if (($pos = stripos($haystack, $needle)) !== false) {
+			if (stripos($haystack, $needle) !== false) {
 				return true;
 			}
 		}
