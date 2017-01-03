@@ -96,14 +96,10 @@ class ArrayHelper
 	{
 		$values = [];
 		foreach ($ary as $itemKey => $item) {
-			if (array_key_exists($value, $item)) {
-				if ($key !== null) {
-					$itemKey = array_key_exists($key, $item) ? $item[$key] : null;
-				}
-
-				if ($itemKey !== null) {
-					$values[$itemKey] = $item[$value];
-				}
+			if (array_key_exists($value, $item) &&
+				($key === null || ($itemKey = (array_key_exists($key, $item) ? $item[$key] : null)) !== null)
+			) {
+				$values[$itemKey] = $item[$value];
 			}
 		}
 

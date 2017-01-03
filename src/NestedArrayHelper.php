@@ -189,11 +189,9 @@ class NestedArrayHelper
 	{
 		$values = [];
 		foreach ($ary as $itemKey => $item) {
-			if ($key !== null) {
-				$itemKey = static::get($item, $key);
-			}
-
-			if ($itemKey !== null && static::has($item, $value)) {
+			if (static::has($item, $value) &&
+				($key === null || ($itemKey = static::get($item, $key)) !== null)
+			) {
 				$values[$itemKey] = static::get($item, $value);
 			}
 		}
