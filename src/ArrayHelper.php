@@ -38,7 +38,7 @@ class ArrayHelper
 	 * @param null|mixed $alt
 	 * @return mixed
 	 */
-	public static function keyValue(&$ary, $key, $alt = null)
+	public static function keyValue(array &$ary, $key, $alt = null)
 	{
 		return array_key_exists($key, $ary) ? $ary[$key] : $alt;
 	}
