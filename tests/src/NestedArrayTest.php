@@ -123,11 +123,15 @@ class NestedArrayHelperTest
 			]
 		];
 
-
-
-
-
 		return $cases;
+	}
+
+	public function testSeparatorChanges()
+	{
+		NestedArrayHelper::setSeparator('/');
+		$s = NestedArrayHelper::get($this->aryTester, 'some/where/over/the/rainbow');
+		self::assertEquals('blue birds fly', $s);
+		NestedArrayHelper::setSeparator(); // reset it... maybe we should find another way to handle this?
 	}
 
 	public function testGetReturnsWithStringPath()

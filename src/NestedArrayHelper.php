@@ -16,6 +16,25 @@ namespace FastFrame\Utility;
  */
 class NestedArrayHelper
 {
+	const DEFAULT_SEPARATOR = '.';
+
+	/**
+	 * The separator to split strings
+	 *
+	 * @var string
+	 */
+	protected static $separator = self::DEFAULT_SEPARATOR;
+
+	/**
+	 * Changes the separator used in {convertToArray()}
+	 *
+	 * @param string $separator
+	 */
+	public static function setSeparator($separator = self::DEFAULT_SEPARATOR)
+	{
+		static::$separator = $separator;
+	}
+
 	/**
 	 * Returns the value at the given path
 	 *
@@ -167,17 +186,6 @@ class NestedArrayHelper
 	}
 
 	/**
-	 * Converts the given nodes into an array if needed
-	 *
-	 * @param string|array $key
-	 * @return array
-	 */
-	protected static function convertToArray($key)
-	{
-		return is_array($key) ? $key : explode('.', $key);
-	}
-
-	/**
 	 * Plucks the requested value from the array into an array
 	 *
 	 * @param array       $ary
@@ -197,5 +205,16 @@ class NestedArrayHelper
 		}
 
 		return $values;
+	}
+
+	/**
+	 * Converts the given nodes into an array if needed
+	 *
+	 * @param string|array $key
+	 * @return array
+	 */
+	protected static function convertToArray($key)
+	{
+		return is_array($key) ? $key : explode(static::$separator, $key);
 	}
 }
