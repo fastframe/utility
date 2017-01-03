@@ -38,7 +38,7 @@ class NestedArrayHelperTest
 
 	public function providePluckCases()
 	{
-		return [
+		$cases =  [
 			[
 				$this->pluckPayload,
 				'name',
@@ -85,6 +85,49 @@ class NestedArrayHelperTest
 				]
 			]
 		];
+
+		// missing item value
+		$payload = $this->pluckPayload;
+		$payload[] = ['username' => 'missing-item-value-for-name'];
+		$cases[] = [
+			$payload,
+			'name',
+			null,
+			[
+				'Firstname Lastname',
+				"FastFrame"
+			]
+		];
+
+		// missing sub-level value
+		$cases[] = [
+			$payload,
+			'test.sub',
+			null,
+			[
+				'first last',
+				"fast frame"
+			]
+		];
+
+		// missing item key
+		$payload = $this->pluckPayload;
+		$payload[] = ['name' => 'missing-item-value-for-name'];
+		$cases[] = [
+			$payload,
+			'test.name',
+			'test.sub',
+			[
+				'first last' => 'kakaw',
+				'fast frame' => "woot"
+			]
+		];
+
+
+
+
+
+		return $cases;
 	}
 
 	public function testGetReturnsWithStringPath()

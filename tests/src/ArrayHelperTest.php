@@ -117,4 +117,29 @@ class ArrayHelperTest
 		];
 		self::assertEquals($e, ArrayHelper::pluck($this->pluckPayload, "name", 'username'));
 	}
+
+	public function testPluckWithEmptyItems()
+	{
+		$e = [
+			'Firstname Lastname',
+			"FastFrame"
+		];
+
+		$payload = $this->pluckPayload;
+		$payload[] = ['username' => 'empty-item'];
+		self::assertEquals($e, ArrayHelper::pluck($payload, "name"));
+	}
+
+	public function testPluckWithEmptyItemsOrKey()
+	{
+		$e = [
+			'flastname' => 'Firstname Lastname',
+			'fastframe' => "FastFrame",
+		];
+
+		$payload = $this->pluckPayload;
+		$payload[] = ['username' => 'empty-item'];
+		$payload[] = ['name' => 'Empty Item'];
+		self::assertEquals($e, ArrayHelper::pluck($payload, "name", "username"));
+	}
 }
