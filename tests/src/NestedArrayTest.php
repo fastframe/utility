@@ -7,13 +7,15 @@
 
 namespace FastFrame\Utility;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for the NestedArrayHelper class
  *
  * @package FastFrame\Utility
  */
 class NestedArrayHelperTest
-	extends \PHPUnit_Framework_TestCase
+	extends TestCase
 {
 	private $aryTester = [
 		'some' => [

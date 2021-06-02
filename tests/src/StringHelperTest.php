@@ -7,13 +7,15 @@
 
 namespace FastFrame\Utility;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for the StringHelper class
  *
  * @package FastFrame\Utility
  */
 class StringHelperTest
-	extends \PHPUnit_Framework_TestCase
+	extends TestCase
 {
 	public function provideValidContains()
 	{
@@ -55,7 +57,7 @@ class StringHelperTest
 	 */
 	public function testContainsThrowsInvalidArgumentWithBadNeedle($payload)
 	{
-		$this->setExpectedException("InvalidArgumentException");
+		$this->expectException(\InvalidArgumentException::class);
 		StringHelper::contains($payload, 'woot');
 	}
 
@@ -85,7 +87,7 @@ class StringHelperTest
 	 */
 	public function testFirstPositionThrowsInvalidArgumentWithBadNeedle($payload)
 	{
-		$this->setExpectedException("InvalidArgumentException");
+		$this->expectException(\InvalidArgumentException::class);
 		StringHelper::firstPosition($payload, 'woot');
 	}
 }

@@ -7,13 +7,15 @@
 
 namespace FastFrame\Utility;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests of the PriorityList
  *
  * @package FastFrame\Event
  */
 class PriorityListTest
-	extends \PHPUnit_Framework_TestCase
+	extends TestCase
 {
 	private $sampleCount0 = 2;
 	private $sampleCount = 4;
@@ -89,7 +91,8 @@ class PriorityListTest
 
 	public function testInsertThrowsExceptionOnNonIntegerPriority()
 	{
-		$this->setExpectedException(\InvalidArgumentException::class, "Priority argument must be an integer");
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage("Priority argument must be an integer");
 		(new PriorityList())->insert('a', 'bad');
 	}
 
@@ -113,7 +116,7 @@ class PriorityListTest
 		self::assertEquals(count($this->samplePayload), $this->buildSampleList()->count());
 	}
 
-	
+
 	public function testCountReturnsTotalForPriority()
 	{
 		self::assertEquals($this->sampleCount0, $this->buildSampleList()->count(0));

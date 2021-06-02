@@ -7,13 +7,15 @@
 
 namespace FastFrame\Utility;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for the ArrayHelper class
  *
  * @package FastFrame\Utility
  */
 class ArrayHelperTest
-	extends \PHPUnit_Framework_TestCase
+	extends TestCase
 {
 	private $simpleAry = [
 		'woot' => 'kakaw'
