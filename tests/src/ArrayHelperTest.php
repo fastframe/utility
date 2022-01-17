@@ -28,7 +28,7 @@ class ArrayHelperTest
 		'boom.to'                     => 'square'
 	];
 
-	private $pluckPayload =[
+	private $pluckPayload = [
 		['username' => 'flastname', 'name' => 'Firstname Lastname'],
 		['username' => 'fastframe', 'name' => 'FastFrame'],
 	];
@@ -94,7 +94,7 @@ class ArrayHelperTest
 			'over.the.wagon'   => 'wheel',
 			'else'             => 'something booms',
 		];
-		$e = [
+		$e   = [
 			'some.where.over.the.rainbow' => 'blue birds fly',
 			'some.where.over.the.wagon'   => 'wheel',
 			'some.where.else'             => 'something booms',
@@ -127,7 +127,7 @@ class ArrayHelperTest
 			"FastFrame"
 		];
 
-		$payload = $this->pluckPayload;
+		$payload   = $this->pluckPayload;
 		$payload[] = ['username' => 'empty-item'];
 		self::assertEquals($e, ArrayHelper::pluck($payload, "name"));
 	}
@@ -139,9 +139,201 @@ class ArrayHelperTest
 			'fastframe' => "FastFrame",
 		];
 
-		$payload = $this->pluckPayload;
+		$payload   = $this->pluckPayload;
 		$payload[] = ['username' => 'empty-item'];
 		$payload[] = ['name' => 'Empty Item'];
 		self::assertEquals($e, ArrayHelper::pluck($payload, "name", "username"));
+	}
+
+	public function testIsHash()
+	{
+		$ary = [1 => true, 3 => true];
+		self::assertTrue(ArrayHelper::isHash($ary));
+	}
+
+	public function testIndexPull()
+	{
+		$ary = [
+			['k1' => 1],
+			['k3' => 3],
+			['k4' => 4],
+			['k1' => 5]
+		];
+		self::assertEquals(
+			[
+				['k1' => 1],
+				[],
+				[],
+				['k1' => 5]
+			],
+			ArrayHelper::indexPull($ary, ['k1', 'k5'])
+		);
+	}
+
+	public function testPropertyPull()
+	{
+		$ary = [
+			(object)['id' => 1],
+			(object)['id' => 3],
+			(object)['id' => 5],
+		];
+		self::assertEquals(
+			[
+				1,
+				3,
+				5
+			],
+			ArrayHelper::propertyPull($ary, 'id')
+		);
+	}
+
+	public function testPropertyPullReturnsObjects()
+	{
+		$ary = [
+			(object)['id' => 1],
+			(object)['id' => 3],
+			(object)['id' => 5],
+		];
+		self::assertEquals(
+			$ary,
+			ArrayHelper::propertyPull($ary, null)
+		);
+	}
+
+	public function testPropertyPullReturnsKeyProperty()
+	{
+		$ary = [
+			(object)['id' => 1, 'key' => 'a'],
+			(object)['id' => 3, 'key' => 'b'],
+			(object)['id' => 5, 'key' => 'c'],
+		];
+		self::assertEquals(
+			[
+				'a' => 1,
+				'b' => 3,
+				'c' => 5
+			],
+			ArrayHelper::propertyPull($ary, 'id', 'key')
+		);
+	}
+
+	public function testPropertyPullReturnsKeyPropertyWithObjects()
+	{
+		$ary = [
+			$a = (object)['id' => 1, 'key' => 'a'],
+			$b = (object)['id' => 3, 'key' => 'b'],
+			$c = (object)['id' => 5, 'key' => 'c'],
+		];
+		self::assertEquals(
+			[
+				'a' => $a,
+				'b' => $b,
+				'c' => $c
+			],
+			ArrayHelper::propertyPull($ary, null, 'key')
+		);
+	}
+
+	public function testMethodPull()
+	{
+		$ary = [
+			new class {
+				public function callme()
+				{
+					return 'maybe';
+				}
+			},
+			new class {
+				public function callme()
+				{
+					return 'never';
+				}
+			}
+		];
+		self::assertEquals(
+			['maybe', 'never'],
+			ArrayHelper::methodPull($ary, 'callme')
+		);
+	}
+
+	public function testMethodPullReturnsObjects()
+	{
+		$ary = [
+			new \stdClass(),
+			new \stdClass(),
+			new \stdClass(),
+		];
+		self::assertEquals(
+			$ary,
+			ArrayHelper::methodPull($ary, null)
+		);
+	}
+
+	public function testMethodPullReturnsKeyedMethod()
+	{
+		$ary = [
+			new class {
+				public function callme()
+				{
+					return 'maybe';
+				}
+			},
+			new class {
+				public function callme()
+				{
+					return 'never';
+				}
+			}
+		];
+		self::assertEquals(
+			['maybe' => 'maybe', 'never' => 'never'],
+			ArrayHelper::methodPull($ary, 'callme', 'callme')
+		);
+	}
+
+	public function testMethodPullReturnsKeyedMethodWithObjects()
+	{
+		$ary = [
+			$a = new class {
+				public function callme()
+				{
+					return 'maybe';
+				}
+			},
+			$b = new class {
+				public function callme()
+				{
+					return 'never';
+				}
+			}
+		];
+		self::assertEquals(
+			['maybe' => $a, 'never' => $b],
+			ArrayHelper::methodPull($ary, null, 'callme')
+		);
+	}
+
+	public function testResolveSplatReturnsfull()
+	{
+		self::assertEquals(
+			['test', 'test', 'test'],
+			ArrayHelper::resolveSplat(['test', 'test', 'test'])
+		);
+	}
+
+	public function testResolveSplatReturnsFirst()
+	{
+		self::assertEquals(
+			['test', 'test', 'test'],
+			ArrayHelper::resolveSplat([['test', 'test', 'test']])
+		);
+	}
+
+	public function testResolveSplatReturnsString()
+	{
+		self::assertEquals(
+			'test',
+			ArrayHelper::resolveSplat(['test'])
+		);
 	}
 }
