@@ -4,7 +4,7 @@ Utilities used by other FastFrame components
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fastframe/utility.svg?style=flat-square)](https://packagist.org/packages/fastframe/utility)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/fastframe/utility/master.svg?style=flat-square)](https://travis-ci.org/fastframe/utility)
+[![Build Status](https://github.com/fastframe/utility/actions/workflows/tests.yml/badge.svg)
 [![Code Climate](https://codeclimate.com/github/fastframe/utility/badges/gpa.svg)](https://codeclimate.com/github/fastframe/utility)
 [![Test Coverage](https://codeclimate.com/github/fastframe/utility/badges/coverage.svg)](https://codeclimate.com/github/fastframe/utility/coverage)
 
