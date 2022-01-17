@@ -336,4 +336,29 @@ class ArrayHelperTest
 			ArrayHelper::resolveSplat(['test'])
 		);
 	}
+
+
+	public function testToCommentDefaults()
+	{
+		$ary = [
+			'test'  => 'kakaw',
+			'kakaw' => 'test'
+		];
+		self::assertEquals(
+			"test=kakaw; kakaw=test",
+			ArrayHelper::toComment($ary)
+		);
+	}
+
+	public function testToCommentAcceptsCustomSeparators()
+	{
+		$ary = [
+			'test'  => 'kakaw',
+			'kakaw' => 'test'
+		];
+		self::assertEquals(
+			"test: kakaw|\nkakaw: test",
+			ArrayHelper::toComment($ary, ": ", "|\n")
+		);
+	}
 }

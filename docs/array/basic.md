@@ -243,3 +243,30 @@ Returns an array representing the splat, or just the first argument if only one 
 	splatted('test', 'test', 'test'); //= ['test', 'test', 'test']
 	splatted(['test','test','test']); //= ['test', 'test', 'test']
 ```
+
+### toComment
+
+Formats the array into `key=value;` pairings
+
+```php
+$ary = [
+    'one' => 'value #1',
+    'two' => 'value #2',
+];
+
+FastFrame\Utility\ArrayHelper::toComment($ary);
+//= 'one=value #1; two=value #2'
+```
+
+Using a different separator between keys & values
+
+```php
+ArrayHelper::toComment($ary, ': ');
+//= 'one: value#1; two: value #2'
+```
+
+Using a different separator between key/value pairs
+```php
+ArrayHelper::toComment($ary, '=', '|');
+//= 'one=value#1|two=value #2'
+```
