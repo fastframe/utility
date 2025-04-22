@@ -91,8 +91,7 @@ class PriorityListTest
 
 	public function testInsertThrowsExceptionOnNonIntegerPriority()
 	{
-		$this->expectException(\InvalidArgumentException::class);
-		$this->expectExceptionMessage("Priority argument must be an integer");
+		$this->expectException(\TypeError::class);
 		(new PriorityList())->insert('a', 'bad');
 	}
 

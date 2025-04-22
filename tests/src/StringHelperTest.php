@@ -25,10 +25,10 @@ class StringHelperTest
 			[['my', 'boy'], 'Hello boy, this is my world!']
 		];
 	}
+
 	public function provideNeedlesForException()
 	{
 		return [
-			[new \stdClass()],
 			[[new \stdClass()]],
 			[[['hi']]]
 		];

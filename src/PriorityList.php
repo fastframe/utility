@@ -6,6 +6,8 @@
  */
 namespace FastFrame\Utility;
 
+use ReturnTypeWillChange;
+
 /**
  * Implements a Priority List.
  *
@@ -25,56 +27,56 @@ class PriorityList
 	 *
 	 * @var int
 	 */
-	private $flags;
+	private int $flags;
 
 	/**
 	 * The node index in the priority
 	 *
 	 * @var int|bool
 	 */
-	private $node = false;
+	private int|bool $node = false;
 
 	/**
 	 * The priority index
 	 *
 	 * @var int|bool
 	 */
-	private $priorityIndex = -1;
+	private int|bool $priorityIndex = -1;
 
 	/**
 	 * The priority
 	 *
 	 * @var int
 	 */
-	private $priority;
+	private ?int $priority;
 
 	/**
 	 * Number of items in the list
 	 *
 	 * @var int
 	 */
-	private $count = 0;
+	private int $count = 0;
 
 	/**
 	 * List of the nodes
 	 *
 	 * @var array
 	 */
-	private $nodes = [];
+	private array $nodes = [];
 
 	/**
 	 * List of the priorities
 	 *
 	 * @var array
 	 */
-	private $priorities = [];
+	private array $priorities = [];
 
 	/**
 	 * PriorityList constructor.
 	 *
 	 * @param int $flags The flags for current
 	 */
-	public function __construct($flags = self::EXTR_DATA)
+	public function __construct(int $flags = self::EXTR_DATA)
 	{
 		$this->flags = $flags;
 	}
@@ -85,12 +87,8 @@ class PriorityList
 	 * @param mixed $value
 	 * @param int   $priority
 	 */
-	public function insert($value, $priority = 0)
+	public function insert(mixed $value, int $priority = 0): void
 	{
-		if (!is_int($priority)) {
-			throw new \InvalidArgumentException("Priority argument must be an integer");
-		}
-
 		if (!isset($this->nodes[$priority])) {
 			$this->nodes[$priority] = [];
 			$this->resetPriorities($this->priorityIndex);
@@ -105,11 +103,9 @@ class PriorityList
 	 *
 	 * If $priority is not specified then it finds the first matching item
 	 *
-	 * @param  mixed    $value
-	 * @param  int|null $priority
 	 * @return bool True when the item was removed, false otherwiser
 	 */
-	public function remove($value, $priority = null)
+	public function remove(mixed $value, ?int $priority = null): bool
 	{
 		foreach ($this->priorities as $nodePriority) {
 			if ($priority == null || $nodePriority === $priority) {
@@ -137,7 +133,8 @@ class PriorityList
 	 * @param int|null $priority The priority to count. Default is all
 	 * @return int
 	 */
-	public function count($priority = null)
+	#[ReturnTypeWillChange]
+	public function count(?int $priority = null)
 	{
 		return $priority === null ? $this->count : count($this->nodes[$priority]);
 	}
@@ -145,6 +142,7 @@ class PriorityList
 	/**
 	 * {@inheritdoc}
 	 */
+	#[ReturnTypeWillChange]
 	public function current()
 	{
 		if ($this->flags === self::EXTR_DATA) {
@@ -163,6 +161,7 @@ class PriorityList
 	/**
 	 * {@inheritdoc}
 	 */
+	#[ReturnTypeWillChange]
 	public function next()
 	{
 		$this->node = $this->findNext($this->nodes[$this->priority], $this->node);
@@ -183,6 +182,7 @@ class PriorityList
 	/**
 	 * {@inheritdoc}
 	 */
+	#[ReturnTypeWillChange]
 	public function valid()
 	{
 		if (false === $this->node || -1 === $this->priorityIndex || false === $this->priority) {
@@ -195,6 +195,7 @@ class PriorityList
 	/**
 	 * {@inheritdoc}
 	 */
+	#[ReturnTypeWillChange]
 	public function key()
 	{
 		return $this->priority . '-' . $this->node;
@@ -203,6 +204,7 @@ class PriorityList
 	/**
 	 * {@inheritdoc}
 	 */
+	#[ReturnTypeWillChange]
 	public function rewind()
 	{
 		$this->resetPriorities(-1);
@@ -213,10 +215,8 @@ class PriorityList
 	 * Reloads the priorities and sets the priorityIndex
 	 *
 	 * Used during insert/remove of values from the list
-	 *
-	 * @param int|null $priorityIndex
 	 */
-	private function resetPriorities($priorityIndex = null)
+	private function resetPriorities(?int $priorityIndex = null): void
 	{
 		$this->priorities = array_keys($this->nodes);
 		rsort($this->priorities, SORT_NUMERIC | SORT_NATURAL);
@@ -229,12 +229,8 @@ class PriorityList
 
 	/**
 	 * Returns the next integer index in the array
-	 *
-	 * @param $ary
-	 * @param $idx
-	 * @return bool|int
 	 */
-	private function findNext(&$ary, $idx)
+	private function findNext(array &$ary, mixed $idx): bool|int
 	{
 		$count = count($ary);
 		for ($idx += 1; $idx <= $count; ++$idx) {

@@ -20,17 +20,13 @@ class NestedArrayHelper
 
 	/**
 	 * The separator to split strings
-	 *
-	 * @var string
 	 */
-	protected static $separator = self::DEFAULT_SEPARATOR;
+	protected static string $separator = self::DEFAULT_SEPARATOR;
 
 	/**
 	 * Changes the separator used in {convertToArray()}
-	 *
-	 * @param string $separator
 	 */
-	public static function setSeparator($separator = self::DEFAULT_SEPARATOR)
+	public static function setSeparator(string $separator = self::DEFAULT_SEPARATOR): void
 	{
 		static::$separator = $separator;
 	}
@@ -39,13 +35,8 @@ class NestedArrayHelper
 	 * Returns the value at the given path
 	 *
 	 * Returns the default value if not specified
-	 *
-	 * @param array        $ary
-	 * @param string|array $key
-	 * @param null         $alt
-	 * @return array|null
 	 */
-	public static function &get(array &$ary, $key, $alt = null)
+	public static function &get(array &$ary, array|string $key, mixed $alt = null): mixed
 	{
 		$key   = self::convertToArray($key);
 		$ref   =& $ary;
@@ -61,6 +52,7 @@ class NestedArrayHelper
 			break;
 		}
 
+		// Can't single line this due to the ref return
 		if ($found) {
 			return $ref;
 		}
@@ -70,12 +62,8 @@ class NestedArrayHelper
 
 	/**
 	 * Sets the value at the given path
-	 *
-	 * @param array        $ary
-	 * @param string|array $key
-	 * @param mixed        $value
 	 */
-	public static function set(array &$ary, $key, $value)
+	public static function set(array &$ary, array|string $key, mixed $value): void
 	{
 		$key = self::convertToArray($key);
 		while (($node = array_shift($key)) !== null) {
@@ -96,15 +84,11 @@ class NestedArrayHelper
 	}
 
 	/**
-	 * Returns whether or not the array has the given key
+	 * Returns whether the array has the given key
 	 *
 	 * If you are going to use the value it's better to use NestedArray::get() instead of this function
-	 *
-	 * @param array        $ary
-	 * @param string|array $key
-	 * @return bool
 	 */
-	public static function has(array &$ary, $key)
+	public static function has(array &$ary, array|string $key): bool
 	{
 		$key = self::convertToArray($key);
 		while (($node = array_shift($key)) !== null) {
@@ -123,13 +107,9 @@ class NestedArrayHelper
 	 * Merges arrays better than array_merge_recursive
 	 *
 	 * The first array becomes the base for comparison on merge.
-	 *
-	 * @param array ...$arys
-	 * @return array|mixed
 	 */
-	public static function deepMerge()
+	public static function deepMerge(array ...$arys): mixed
 	{
-		$arys  = func_get_args();
 		$prime = array_shift($arys);
 
 		while ($ary = array_shift($arys)) {
@@ -148,11 +128,8 @@ class NestedArrayHelper
 
 	/**
 	 * Expands the array from dotted notation
-	 *
-	 * @param array $ary
-	 * @return array
 	 */
-	public static function expand(array &$ary)
+	public static function expand(array &$ary): array
 	{
 		$newAry = [];
 		foreach ($ary as $key => $value) {
@@ -164,11 +141,8 @@ class NestedArrayHelper
 
 	/**
 	 * Compresses the array into dotted notation
-	 *
-	 * @param array $ary
-	 * @return array
 	 */
-	public static function compress(array &$ary)
+	public static function compress(array &$ary): array
 	{
 		$newAry = [];
 		foreach ($ary as $k1 => $v1) {
@@ -187,13 +161,8 @@ class NestedArrayHelper
 
 	/**
 	 * Plucks the requested value from the array into an array
-	 *
-	 * @param array       $ary
-	 * @param string      $value
-	 * @param string|null $key
-	 * @return array
 	 */
-	public static function pluck(array &$ary, $value, $key = null)
+	public static function pluck(array &$ary, string $value, ?string $key = null): array
 	{
 		$values = [];
 		foreach ($ary as $itemKey => $item) {
@@ -209,11 +178,8 @@ class NestedArrayHelper
 
 	/**
 	 * Converts the given nodes into an array if needed
-	 *
-	 * @param string|array $key
-	 * @return array
 	 */
-	protected static function convertToArray($key)
+	protected static function convertToArray(array|string $key): array
 	{
 		return is_array($key) ? $key : explode(static::$separator, $key);
 	}

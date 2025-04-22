@@ -15,13 +15,9 @@ namespace FastFrame\Utility;
 class StringHelper
 {
 	/**
-	 * Returns whether or not any of the needles exist in the haystack
-	 *
-	 * @param string|array $needles
-	 * @param string       $haystack
-	 * @return bool|int
+	 * Returns whether any of the needles exist in the haystack
 	 */
-	public static function contains($needles, $haystack)
+	public static function contains(array|string|null $needles, string $haystack): bool
 	{
 		if (empty($haystack) || empty($needles)) {
 			return false;
@@ -41,11 +37,8 @@ class StringHelper
 	 * Find position of first occurrence of a group of strings
 	 *
 	 * @see {http://codereview.stackexchange.com/a/52309}
-	 * @param string|array $needles
-	 * @param string       $haystack
-	 * @return bool|int|null
 	 */
-	public static function firstPosition($needles, $haystack)
+	public static function firstPosition(array|string|null $needles, string $haystack): bool|int|null
 	{
 		if (empty($haystack) || empty($needles)) {
 			return false;
@@ -64,11 +57,9 @@ class StringHelper
 	}
 
 	/**
-	 * Returns whether or not the var passed in is a string
-	 *
-	 * @param $str
+	 * Returns whether the var passed in is a string
 	 */
-	protected static function assertString($str)
+	protected static function assertString(mixed $str): void
 	{
 		if (!is_string($str)) {
 			throw new \InvalidArgumentException("Must be a string");
@@ -80,11 +71,9 @@ class StringHelper
 	 *
 	 * If not an array then this throws an \InvalidArgumentException
 	 *
-	 * @param $needles
 	 * @throws \InvalidArgumentException
-	 * @return array
 	 */
-	protected static function convertNeedle($needles)
+	protected static function convertNeedle(array|string $needles): array
 	{
 		if (is_string($needles)) {
 			$needles = [$needles];
