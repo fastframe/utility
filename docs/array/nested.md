@@ -1,8 +1,8 @@
 # Dealing with Nested arrays
 
-`FastFrame\Utility\NestedArrayHelper` provides methods for interacting with interacting with nested, or multi-dimensional, PHP arrays.
+`FastFrame\Utility\NestedArrayHelper` provides methods for interacting with nested, or multi-dimensional, PHP arrays.
 
-When there is a `$key` parameter to one of this classes functions, it may be in the following format
+When there is a `$key` parameter to one of the functions, it may be in the following format
 
   * a string in dotted notation `some.where.over.the.rainbow`
   * an array

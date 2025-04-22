@@ -19,22 +19,24 @@ $ composer require fastframe/utility
 
 The following classes are provided by this library:
 
-  * `FastFrame\Utility\ArrayHelper` Contains basic array handling utilities
-  * `FastFrame\Utility\NestedArrayHelper` Contains nested array handling utilities
-  * `FastFrame\Utility\PriorityList` Implementation of a priority queue that doesn't remove the items on iteration
-  * `FastFrame\Utility\StringHelper` Contains string handling utilities
+  * [FastFrame\Utility\ArrayHelper](./docs/array/basic.md) Contains basic array handling utilities
+  * [FastFrame\Utility\HistorySet](./docs/collection/history_set.md) Contains a Set implementation that tracks additions and removals
+  * [FastFrame\Utility\NestedArrayHelper](./docs/array/nested.md) Contains nested array handling utilities
+  * [FastFrame\Utility\PriorityList](./docs/priority_list.md) Implementation of a priority queue that doesn't remove the items on iteration
+  * [FastFrame\Utility\Set](./docs/collection/set.md) Contains a Set implementation
+  * [FastFrame\Utility\StringHelper](./docs/strings.md) Contains string handling utilities
 
 For general usage instructions, please read the documentation [here](./docs/index.md).
 
 ## Quality
 
-This package attempts to comply with [PSR-1][] and [PSR-4][]. If
-you notice compliance oversights, please send a patch via pull request.
+This package attempts to comply with [PSR-1][] and [PSR-4][]. If you notice compliance oversights, please send a 
+patch via pull request.
 
 ## Support
 
-If you believe you have found a bug, please report it using the [Github issue tracker](https://github.com/fastframe/utility/issues),
-or better yet, fork the library and submit a pull request.
+If you believe you have found a bug, please report it using the [Github issue tracker](https://github.com/fastframe/utility/issues), or better yet, 
+fork the library and submit a pull request.
 
 ## Testing
 

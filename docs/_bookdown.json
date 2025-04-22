@@ -3,6 +3,8 @@
   "content" : [
     "array/basic.md",
     "array/nested.md",
+    "collection/set.md",
+    "collection/history_set.md",
     "priority_list.md",
     "strings.md"
   ]
